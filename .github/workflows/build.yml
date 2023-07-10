@@ -1,0 +1,93 @@
+name: Ada (GNAT)
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-linux:
+
+    runs-on: ubuntu-20.04
+
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Set up alire
+      uses: alire-project/setup-alire@v1
+
+    - name: Build alire
+      run: >
+        alr -n get gnatdoc
+        cd gnatdoc*
+        alr -n update &&
+        alr -n build --release
+      
+    - name: Compress gnatdoc
+      run: tar -cf gnatdoc-linux.tar bin
+    
+    - name: Uploadgetada
+      uses: actions/upload-artifact@v2
+      with:
+         name: gnatdoc-linux.tar
+         path: gnatdoc-linux.tar
+
+
+  build-windows:
+    runs-on: windows-latest
+    
+    steps: 
+    
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up alire
+        uses: alire-project/setup-alire@v1
+
+      - name: Build alire
+        run: >
+         alr -n get gnatdoc
+         cd gnatdoc*
+         alr -n update &&
+         alr -n build --release
+      
+      - name: Compress getada
+        run: 7z a -tzip gnatdoc-win.zip bin
+    
+      - name: Uploadgetada
+        uses: actions/upload-artifact@v2
+        with:
+         name: gnatdoc-win.zip
+         path: gnatdoc-win.zip
+
+
+  build-macos:
+    runs-on: macos-latest
+    
+    steps: 
+    
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up alire
+        uses: alire-project/setup-alire@v1
+
+      - name: Build alire
+        run: >
+         alr -n get gnatdoc
+         cd gnatdoc*
+         alr -n update &&
+         alr -n build --release
+      
+      - name: Compress getada
+        run: zip -r gnatdoc-macos.zip bin
+    
+      - name: Uploadgetada
+        uses: actions/upload-artifact@v2
+        with:
+         name: gnatdoc-macos.zip
+         path: gnatdoc-macos.zip
+  
