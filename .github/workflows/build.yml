@@ -27,7 +27,10 @@ jobs:
         alr -n build --release
       
     - name: Compress gnatdoc
-      run: tar -cf gnatdoc-linux.tar bin
+      run: >
+        cd gnatdoc* &&
+        tar -cf gnatdoc-linux.tar bin &&
+        mv gnatdoc-linux.tar ../
     
     - name: Upload gnatdoc
       uses: actions/upload-artifact@v2
@@ -36,58 +39,29 @@ jobs:
          path: gnatdoc-linux.tar
 
 
-  build-windows:
-    runs-on: windows-latest
-    
-    steps: 
-    
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Set up alire
-        uses: alire-project/setup-alire@v1
-
-      - name: Build gnatdoc
-        run: >
-         alr get gnatdoc &&
-         cd gnatdoc* &&
-         alr -n update &&
-         alr -n build --release
-      
-      - name: Compress getada
-        run: 7z a -tzip gnatdoc-win.zip bin
-    
-      - name: Upload gnatdoc
-        uses: actions/upload-artifact@v2
-        with:
-         name: gnatdoc-win.zip
-         path: gnatdoc-win.zip
-
-
-  build-macos:
-    runs-on: macos-latest
-    
-    steps: 
-    
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Set up alire
-        uses: alire-project/setup-alire@v1
-
-      - name: Build gnatdoc
-        run: >
-         alr get gnatdoc &&
-         cd gnatdoc* &&
-         alr -n update &&
-         alr -n build --release
-      
-      - name: Compress getada
-        run: zip -r gnatdoc-macos.zip bin
-    
-      - name: Upload gnatdoc
-        uses: actions/upload-artifact@v2
-        with:
-         name: gnatdoc-macos.zip
-         path: gnatdoc-macos.zip
-  
+#  build-windows:
+#    runs-on: windows-latest
+#    
+#    steps: 
+#    
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#
+#      - name: Set up alire
+#        uses: alire-project/setup-alire@v1
+#
+#      - name: Build gnatdoc
+#        run: >
+#         alr get gnatdoc &&
+#         cd gnatdoc* &&
+#         alr -n update &&
+#         alr -n build --release
+#      
+#      - name: Compress getada
+#        run: 7z a -tzip gnatdoc-win.zip bin
+#
+#      - name: Upload gnatdoc
+#        uses: actions/upload-artifact@v2
+#        with:
+#         name: gnatdoc-win.zip
+#         path: gnatdoc-win.zip
