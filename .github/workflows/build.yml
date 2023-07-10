@@ -39,29 +39,32 @@ jobs:
          path: gnatdoc-linux.tar
 
 
-#  build-windows:
-#    runs-on: windows-latest
-#    
-#    steps: 
-#    
-#      - name: Checkout
-#        uses: actions/checkout@v3
-#
-#      - name: Set up alire
-#        uses: alire-project/setup-alire@v1
-#
-#      - name: Build gnatdoc
-#        run: >
-#         alr get gnatdoc &&
-#         cd gnatdoc* &&
-#         alr -n update &&
-#         alr -n build --release
-#      
-#      - name: Compress getada
-#        run: 7z a -tzip gnatdoc-win.zip bin
-#
-#      - name: Upload gnatdoc
-#        uses: actions/upload-artifact@v2
-#        with:
-#         name: gnatdoc-win.zip
-#         path: gnatdoc-win.zip
+  build-windows:
+    runs-on: windows-latest
+    
+    steps: 
+    
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up alire
+        uses: alire-project/setup-alire@v1
+
+      - name: Build gnatdoc
+        run: >
+         alr get gnatdoc &&
+         cd gnatdoc* &&
+         alr -n update &&
+         alr -n build --release
+      
+      - name: Compress getada
+        run: >
+          cd gnatdoc* &&
+          7z a -tzip gnatdoc-win.zip bin
+          mv gnatdoc-win.zip ../
+
+      - name: Upload gnatdoc
+        uses: actions/upload-artifact@v2
+        with:
+         name: gnatdoc-win.zip
+         path: gnatdoc-win.zip
