@@ -19,17 +19,17 @@ jobs:
     - name: Set up alire
       uses: alire-project/setup-alire@v1
 
-    - name: Build alire
+    - name: Build gnatdoc
       run: >
-        alr get gnatdoc
-        cd gnatdoc*
+        alr get gnatdoc &&
+        cd gnatdoc* &&
         alr -n update &&
         alr -n build --release
       
     - name: Compress gnatdoc
       run: tar -cf gnatdoc-linux.tar bin
     
-    - name: Uploadgetada
+    - name: Upload gnatdoc
       uses: actions/upload-artifact@v2
       with:
          name: gnatdoc-linux.tar
@@ -49,15 +49,15 @@ jobs:
 
       - name: Build gnatdoc
         run: >
-         alr get gnatdoc
-         cd gnatdoc*
+         alr get gnatdoc &&
+         cd gnatdoc* &&
          alr -n update &&
          alr -n build --release
       
       - name: Compress getada
         run: 7z a -tzip gnatdoc-win.zip bin
     
-      - name: Uploadgetada
+      - name: Upload gnatdoc
         uses: actions/upload-artifact@v2
         with:
          name: gnatdoc-win.zip
@@ -77,15 +77,15 @@ jobs:
 
       - name: Build gnatdoc
         run: >
-         alr get gnatdoc
-         cd gnatdoc*
+         alr get gnatdoc &&
+         cd gnatdoc* &&
          alr -n update &&
          alr -n build --release
       
       - name: Compress getada
         run: zip -r gnatdoc-macos.zip bin
     
-      - name: Uploadgetada
+      - name: Upload gnatdoc
         uses: actions/upload-artifact@v2
         with:
          name: gnatdoc-macos.zip
