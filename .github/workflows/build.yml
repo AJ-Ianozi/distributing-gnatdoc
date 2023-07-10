@@ -21,7 +21,7 @@ jobs:
 
     - name: Build alire
       run: >
-        alr -n get gnatdoc
+        alr get gnatdoc
         cd gnatdoc*
         alr -n update &&
         alr -n build --release
@@ -47,9 +47,9 @@ jobs:
       - name: Set up alire
         uses: alire-project/setup-alire@v1
 
-      - name: Build alire
+      - name: Build gnatdoc
         run: >
-         alr -n get gnatdoc
+         alr get gnatdoc
          cd gnatdoc*
          alr -n update &&
          alr -n build --release
@@ -75,9 +75,9 @@ jobs:
       - name: Set up alire
         uses: alire-project/setup-alire@v1
 
-      - name: Build alire
+      - name: Build gnatdoc
         run: >
-         alr -n get gnatdoc
+         alr get gnatdoc
          cd gnatdoc*
          alr -n update &&
          alr -n build --release
